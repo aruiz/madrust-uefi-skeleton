@@ -1,0 +1,9 @@
+[package]
+name = "uefi-app"
+version = "0.1.0"
+authors = ["Alberto Ruiz <aruiz@gnome.org>"]
+edition = "2018"
+
+[dependencies]
+uefi = { git = "https://github.com/GabrielMajeri/uefi-rs.git" }
+uefi-services = { git = "https://github.com/GabrielMajeri/uefi-rs.git" }
