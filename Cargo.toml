@@ -5,5 +5,6 @@ authors = ["Alberto Ruiz <aruiz@gnome.org>"]
 edition = "2018"
 
 [dependencies]
+log  = {version = "0.4", default-features = false }
 uefi = { git = "https://github.com/GabrielMajeri/uefi-rs.git" }
 uefi-services = { git = "https://github.com/GabrielMajeri/uefi-rs.git" }
