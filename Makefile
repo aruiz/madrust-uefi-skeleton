@@ -1,8 +1,14 @@
 target/x86_64-none-efi/debug/uefi-app.efi: src/main.rs
-	RUSTFLAGS="" RUST_TARGET_PATH=$(pwd) cargo +nightly xbuild --target x86_64-unknown-uefi --package uefi-app
+	cargo +nightly xbuild --target x86_64-unknown-uefi --package uefi-app
 
 install-deps:
 	rustup toolchain install nightly
 	rustup default nightly
 	rustup component add --toolchain nightly rust-src
 	cargo install --force cargo-xbuild
+
+run-qemu:
+	mkdir -p efi/EFI/BOOT/
+	cp target/x86_64-unknown-uefi/debug/uefi-app.efi efi/EFI/BOOT/BOOTX64.EFI
+	echo "\\EFI\\BOOT\\BOOTX64.EFI" > efi/EFI/BOOT/startup.nsh
+	qemu-kvm -nodefaults -vga std -machine q35,accel=kvm:tcg -m 128M -drive if=pflash,format=raw,readonly,file=OVMF_CODE.fd -drive if=pflash,format=raw,file=OVMF_VARS.fd -drive format=raw,file=fat:rw:efi/ -serial stdio -monitor vc:1024x768
