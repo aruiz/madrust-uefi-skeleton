@@ -1,5 +1,5 @@
 build: src/main.rs
-	RUSTFLAGS="" RUST_TARGET_PATH=$(pwd) cargo +nightly xbuild --target x86_64-none-efi --package uefi-app
+	RUSTFLAGS="" RUST_TARGET_PATH=$(pwd) cargo +nightly xbuild --target x86_64-none-efi.json --package uefi-app
 
 install-deps:
 	rustup toolchain install nightly
