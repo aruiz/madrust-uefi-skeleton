@@ -19,7 +19,6 @@ use uefi::proto::media::{
 };
 use uefi::data_types::Align;
 use uefi::table::boot::{
-    MemoryDescriptor,
     SearchType,
 };
 
@@ -55,7 +54,6 @@ pub extern "win64" fn efi_main(_handle: uefi::Handle, system_table: SystemTable<
 
     let mut buf = Vec::<u8>::with_capacity(FileInfo::alignment() * 50);
     let root_file = loop {
-
         match root.read_entry(&mut buf[..]).map_err(|err| err.split()) {
             Ok(ret) => break ret.log().unwrap(),
             Err((_, Some(new_size))) => {
@@ -65,11 +63,9 @@ pub extern "win64" fn efi_main(_handle: uefi::Handle, system_table: SystemTable<
         };
     };
 
-
-
-    system_table.stdout().write_str("Ficheros en la particion EFI: ");
-    system_table.stdout().write_str(String::from_utf16_lossy(root_file.file_name().to_u16_slice()).as_str());
-    system_table.stdout().write_str("\n");
+    let _ = system_table.stdout().write_str("Ficheros en la particion EFI: /");
+    let _ = system_table.stdout().write_str(String::from_utf16_lossy(root_file.file_name().to_u16_slice()).as_str());
+    let _ = system_table.stdout().write_str("/\n");
 
     loop {}
 }
