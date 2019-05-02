@@ -11,6 +11,7 @@ run-qemu:
 	rm -rf efi/
 	mkdir -p efi/EFI/BOOT/
 	cp target/x86_64-unknown-uefi/debug/uefi-app.efi efi/EFI/BOOT/BOOTX64.EFI
+	cp /usr/share/OVMF/OVMF_VARS.fd .
 	qemu-kvm \
 		-nodefaults \
 		-vga std \
